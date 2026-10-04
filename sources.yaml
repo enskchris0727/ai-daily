@@ -75,6 +75,7 @@ sources:
     homepage: https://www.anthropic.com/news
     enabled: true
     strip_title_prefixes: ["Announcements", "Science", "Policy", "Alignment", "Product", "Engineering", "Societal Impacts", "Economic Research"]
+    max_items: 12
 
   - id: deepmind
     name: Google DeepMind
@@ -157,6 +158,7 @@ sources:
     homepage: https://research.ibm.com/blog
     enabled: true
     filter_keywords: *ai_keywords
+    max_items: 10
 
   - id: mistral
     name: Mistral AI
@@ -171,6 +173,7 @@ sources:
         url: https://mistral.ai/news/feed.xml
       - type: html
         url: https://mistral.ai/news/
+    max_items: 12
 
   - id: xai
     name: xAI
@@ -180,6 +183,7 @@ sources:
     url: https://x.ai/blog
     homepage: https://x.ai/blog
     enabled: true
+    max_items: 15
 
   - id: cohere
     name: Cohere
@@ -190,6 +194,7 @@ sources:
     homepage: https://cohere.com/blog
     enabled: true
     filter_keywords: *ai_keywords
+    max_items: 10
 
   - id: stability
     name: Stability AI
@@ -254,6 +259,7 @@ sources:
     url: https://www.minimax.io/news
     homepage: https://www.minimax.io/news
     enabled: true
+    max_items: 10
 
   - id: sensetime
     name: 商汤科技
@@ -265,6 +271,7 @@ sources:
     enabled: true
 
   # ===== B 类：论文 =====
+    max_items: 10
   - id: arxiv-ai
     name: arXiv cs.AI
     category: paper
@@ -329,6 +336,7 @@ sources:
     url: https://zhidx.com/
     homepage: https://zhidx.com/
     enabled: true
+    max_items: 12
 
   - id: infoq-cn
     name: InfoQ 中文站
