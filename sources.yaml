@@ -105,6 +105,8 @@ sources:
     fallbacks:
       - type: rss
         url: https://ai.meta.com/blog/rss.xml
+      - type: rss
+        url: https://engineering.fb.com/feed/
       - type: html
         url: https://ai.meta.com/blog/
 
