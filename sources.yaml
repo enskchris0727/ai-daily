@@ -1,0 +1,339 @@
+# AI 每日前沿 —— 来源清单
+#
+# 字段说明：
+#   id        稳定标识，不要随意更改（影响去重与已读状态）
+#   name      显示名称
+#   category  lab（公司/实验室） | paper（论文） | cn-media（中文媒体）
+#   lang      en | zh
+#   type      rss | json | html
+#   url       抓取地址
+#   homepage  原文首页
+#   enabled   设为 false 可临时停用
+#
+# 本清单经 2026-10-04 实测筛选，详见 docs/source-availability-2026-10-04.md
+
+# AI 相关关键词：用于把综合科技媒体、以及内容较杂的实验室博客里的 AI 内容筛出来。
+# 各来源通过 filter_keywords: *ai_keywords 引用这份列表。
+ai_keywords: &ai_keywords
+  - "AI"
+  - "人工智能"
+  - "大模型"
+  - "智能体"
+  - "Agent"
+  - "机器学习"
+  - "深度学习"
+  - "神经网络"
+  - "算力"
+  - "多模态"
+  - "AIGC"
+  - "生成式"
+  - "GPT"
+  - "LLM"
+  - "Transformer"
+  - "ChatGPT"
+  - "Claude"
+  - "Gemini"
+  - "Copilot"
+  - "DeepSeek"
+  - "OpenAI"
+  - "Anthropic"
+  - "语言模型"
+  - "language model"
+  - "diffusion"
+  - "embedding"
+  - "reasoning"
+  - "alignment"
+  - "benchmark"
+  - "inference"
+  - "fine-tun"
+  - "模型"
+  - "推理"
+  - "开源模型"
+  - "文生图"
+  - "文生视频"
+  - "芯片"
+  - "机器人"
+  - "自动驾驶"
+
+sources:
+  # ===== A 类：全球 AI 公司 / 实验室（英文） =====
+  - id: openai
+    name: OpenAI
+    category: lab
+    lang: en
+    type: rss
+    url: https://openai.com/news/rss.xml
+    homepage: https://openai.com/news/
+    enabled: true
+
+  - id: anthropic
+    name: Anthropic
+    category: lab
+    lang: en
+    type: html
+    url: https://www.anthropic.com/news
+    homepage: https://www.anthropic.com/news
+    enabled: true
+    strip_title_prefixes: ["Announcements", "Science", "Policy", "Alignment", "Product", "Engineering", "Societal Impacts", "Economic Research"]
+
+  - id: deepmind
+    name: Google DeepMind
+    category: lab
+    lang: en
+    type: rss
+    url: https://deepmind.google/blog/rss.xml
+    homepage: https://deepmind.google/discover/blog/
+    enabled: true
+
+  - id: google-research
+    name: Google Research
+    category: lab
+    lang: en
+    type: rss
+    url: https://research.google/blog/rss/
+    homepage: https://research.google/blog/
+    enabled: true
+
+  - id: meta-ai
+    name: Meta AI
+    category: lab
+    lang: en
+    type: rss
+    url: https://ai.meta.com/blog/rss/
+    homepage: https://ai.meta.com/blog/
+    enabled: true
+
+  - id: microsoft-research
+    name: Microsoft Research
+    category: lab
+    lang: en
+    type: rss
+    url: https://www.microsoft.com/en-us/research/feed/
+    homepage: https://www.microsoft.com/en-us/research/blog/
+    enabled: true
+
+  - id: nvidia
+    name: NVIDIA AI
+    category: lab
+    lang: en
+    type: rss
+    url: https://blogs.nvidia.com/feed/
+    homepage: https://blogs.nvidia.com/
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: apple-ml
+    name: Apple ML Research
+    category: lab
+    lang: en
+    type: rss
+    url: https://machinelearning.apple.com/rss.xml
+    homepage: https://machinelearning.apple.com/
+    enabled: true
+
+  - id: aws-ml
+    name: AWS Machine Learning
+    category: lab
+    lang: en
+    type: rss
+    url: https://aws.amazon.com/blogs/machine-learning/feed/
+    homepage: https://aws.amazon.com/blogs/machine-learning/
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: ibm-research
+    name: IBM Research
+    category: lab
+    lang: en
+    type: html
+    url: https://research.ibm.com/blog
+    homepage: https://research.ibm.com/blog
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: mistral
+    name: Mistral AI
+    category: lab
+    lang: en
+    type: rss
+    url: https://mistral.ai/feed.xml
+    homepage: https://mistral.ai/news/
+    enabled: true
+
+  - id: xai
+    name: xAI
+    category: lab
+    lang: en
+    type: html
+    url: https://x.ai/blog
+    homepage: https://x.ai/blog
+    enabled: true
+
+  - id: cohere
+    name: Cohere
+    category: lab
+    lang: en
+    type: html
+    url: https://cohere.com/blog
+    homepage: https://cohere.com/blog
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: stability
+    name: Stability AI
+    category: lab
+    lang: en
+    type: html
+    url: https://stability.ai/news
+    homepage: https://stability.ai/news
+    enabled: false  # 2026-10-04 test: page structure yields no article list
+
+  - id: huggingface-blog
+    name: Hugging Face
+    category: lab
+    lang: en
+    type: rss
+    url: https://huggingface.co/blog/feed.xml
+    homepage: https://huggingface.co/blog
+    enabled: true
+
+  # ===== A 类：中国 AI 公司 / 实验室 =====
+  - id: deepseek
+    name: DeepSeek 深度求索
+    category: lab
+    lang: zh
+    type: html
+    url: https://api-docs.deepseek.com/news/
+    homepage: https://www.deepseek.com/
+    enabled: false  # 2026-10-04 test: JS-rendered page, static fetch fails
+
+  - id: qwen
+    name: 阿里通义 Qwen
+    category: lab
+    lang: zh
+    type: rss
+    url: https://qwenlm.github.io/blog/index.xml
+    homepage: https://qwenlm.github.io/blog/
+    enabled: true
+
+  - id: moonshot
+    name: 月之暗面 Kimi
+    category: lab
+    lang: zh
+    type: html
+    url: https://www.moonshot.cn/
+    homepage: https://www.moonshot.cn/
+    enabled: false  # 2026-10-04 test: JS-rendered page, static fetch fails
+
+  - id: zhipu
+    name: 智谱 AI
+    category: lab
+    lang: zh
+    type: html
+    url: https://www.zhipuai.cn/zh/news
+    homepage: https://www.zhipuai.cn/
+    enabled: false  # 2026-10-04 test: list page stale since 2026-03, titles polluted with dates
+
+  - id: minimax
+    name: MiniMax
+    category: lab
+    lang: zh
+    type: html
+    url: https://www.minimax.io/news
+    homepage: https://www.minimax.io/news
+    enabled: true
+
+  - id: sensetime
+    name: 商汤科技
+    category: lab
+    lang: zh
+    type: html
+    url: https://www.sensetime.com/cn/news
+    homepage: https://www.sensetime.com/cn
+    enabled: true
+
+  # ===== B 类：论文 =====
+  - id: arxiv-ai
+    name: arXiv cs.AI
+    category: paper
+    lang: en
+    type: rss
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.AI&sortBy=submittedDate&sortOrder=descending&max_results=30
+    homepage: https://arxiv.org/list/cs.AI/recent
+    enabled: true
+
+  - id: arxiv-lg
+    name: arXiv cs.LG
+    category: paper
+    lang: en
+    type: rss
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.LG&sortBy=submittedDate&sortOrder=descending&max_results=30
+    homepage: https://arxiv.org/list/cs.LG/recent
+    enabled: true
+
+  - id: arxiv-cl
+    name: arXiv cs.CL
+    category: paper
+    lang: en
+    type: rss
+    url: http://export.arxiv.org/api/query?search_query=cat:cs.CL&sortBy=submittedDate&sortOrder=descending&max_results=30
+    homepage: https://arxiv.org/list/cs.CL/recent
+    enabled: true
+
+  - id: hf-papers
+    name: Hugging Face Daily Papers
+    category: paper
+    lang: en
+    type: json
+    url: https://huggingface.co/api/daily_papers?limit=30
+    homepage: https://huggingface.co/papers
+    enabled: true
+
+  # ===== C 类：中文媒体 =====
+  - id: qbitai
+    name: 量子位
+    category: cn-media
+    lang: zh
+    type: rss
+    url: https://www.qbitai.com/feed
+    homepage: https://www.qbitai.com/
+    enabled: true
+
+  - id: leiphone
+    name: 雷锋网
+    category: cn-media
+    lang: zh
+    type: rss
+    url: https://www.leiphone.com/feed
+    homepage: https://www.leiphone.com/
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: zhidx
+    name: 智东西
+    category: cn-media
+    lang: zh
+    type: html
+    url: https://zhidx.com/
+    homepage: https://zhidx.com/
+    enabled: true
+
+  - id: infoq-cn
+    name: InfoQ 中文站
+    category: cn-media
+    lang: zh
+    type: rss
+    url: https://www.infoq.cn/feed
+    homepage: https://www.infoq.cn/
+    enabled: true
+    filter_keywords: *ai_keywords
+
+  - id: ifanr
+    name: 爱范儿
+    category: cn-media
+    lang: zh
+    type: rss
+    url: https://www.ifanr.com/feed
+    homepage: https://www.ifanr.com/
+    enabled: true
+    filter_keywords: *ai_keywords
