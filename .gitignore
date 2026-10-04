@@ -1,1 +1,8 @@
-# see .gitignore in the project root
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+work/
+*.egg-info/
+.DS_Store
