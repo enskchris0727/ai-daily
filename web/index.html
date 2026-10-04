@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 每日前沿</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <h1 class="brand">AI 每日前沿</h1>
+    <div class="meta">
+      <span id="updated" class="updated">加载中…</span>
+      <button id="refresh" class="btn" type="button" title="重新读取最新数据">刷新</button>
+      <button id="manual" class="btn" type="button" hidden title="触发一次后台抓取">手动更新</button>
+      <button id="theme" class="btn" type="button" title="切换深色 / 浅色">◐</button>
+    </div>
+  </div>
+
+  <div class="controls">
+    <nav class="tabs" id="tabs">
+      <button class="tab is-active" data-cat="all" type="button">全部</button>
+      <button class="tab" data-cat="lab" type="button">实验室</button>
+      <button class="tab" data-cat="paper" type="button">论文</button>
+      <button class="tab" data-cat="cn-media" type="button">中文媒体</button>
+      <button class="tab" data-cat="fav" type="button">收藏</button>
+    </nav>
+    <input id="search" class="search" type="search" placeholder="搜索标题或来源…" autocomplete="off">
+  </div>
+
+  <div id="notice" class="notice" hidden></div>
+</header>
+
+<main class="feed-wrap">
+  <ul id="feed" class="feed"></ul>
+  <p id="empty" class="empty" hidden>没有匹配的内容</p>
+  <p id="loading" class="empty">正在读取数据…</p>
+</main>
+
+<footer class="footer">
+  <span>个人自用 · 每天自动更新 3 次</span>
+  <button id="settings-toggle" class="linkbtn" type="button">设置</button>
+</footer>
+
+<div id="settings" class="settings" hidden>
+  <div class="settings-panel">
+    <h2>设置</h2>
+    <p class="settings-note">已读与收藏只保存在这台设备的浏览器里，不会上传。</p>
+    <div class="settings-actions">
+      <button id="clear-read" class="btn wide" type="button">清空已读记录</button>
+      <button id="clear-fav" class="btn wide" type="button">清空收藏</button>
+      <button id="settings-close" class="btn wide" type="button">关闭</button>
+    </div>
+    <p id="storage-info" class="settings-note"></p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
