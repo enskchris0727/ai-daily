@@ -102,6 +102,11 @@ sources:
     url: https://ai.meta.com/blog/rss/
     homepage: https://ai.meta.com/blog/
     enabled: true
+    fallbacks:
+      - type: rss
+        url: https://ai.meta.com/blog/rss.xml
+      - type: html
+        url: https://ai.meta.com/blog/
 
   - id: microsoft-research
     name: Microsoft Research
@@ -159,6 +164,11 @@ sources:
     url: https://mistral.ai/feed.xml
     homepage: https://mistral.ai/news/
     enabled: true
+    fallbacks:
+      - type: rss
+        url: https://mistral.ai/news/feed.xml
+      - type: html
+        url: https://mistral.ai/news/
 
   - id: xai
     name: xAI
