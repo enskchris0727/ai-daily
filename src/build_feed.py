@@ -86,17 +86,35 @@ def build(sources, previous, now):
         futures = [pool.submit(collect_one, s, now) for s in sources]
         outcomes = [f.result() for f in futures]
 
-    items = list(previous)
     ok, failed = [], []
+    fresh_by_source = {}
+    fresh = []
     for source, source_items, error in outcomes:
         if error:
             failed.append({"source_id": source["id"], "name": source["name"], "error": error})
             print("  FAIL  %-24s %s" % (source["name"], error))
         else:
             ok.append(source["id"])
-            items.extend(source_items)
+            fresh_by_source[source["id"]] = set(i["id"] for i in source_items)
+            fresh.extend(source_items)
             print("  OK    %-24s %d 条" % (source["name"], len(source_items)))
 
+    # 带 max_items 的来源只保留当前列表里还在的条目，否则历史归档会一直
+    # 黏在信息流里。仅在本次抓取成功时才裁剪，避免来源临时故障导致误删。
+    limited = set(s["id"] for s in sources if s.get("max_items"))
+    carried = []
+    dropped = 0
+    for item in previous:
+        sid = item.get("source_id")
+        if sid in limited and sid in fresh_by_source:
+            if item["id"] not in fresh_by_source[sid]:
+                dropped += 1
+                continue
+        carried.append(item)
+    if dropped:
+        print("  裁剪掉 %d 条受限来源的历史条目" % dropped)
+
+    items = carried + fresh
     merged = dedupe(items)
 
     cutoff = now - timedelta(days=WINDOW_DAYS)
