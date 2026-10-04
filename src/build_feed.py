@@ -66,6 +66,13 @@ def collect_one(source, fetched_at):
             if keywords and not matches_keywords(item["title"], keywords):
                 continue
             normalized.append(item)
+
+        # 有些来源（尤其网页抓取的）会一次列出全部历史文章且不提供日期，
+        # 会导致陈年旧帖挤进信息流。这类来源按配置只取列表最前面的 N 条。
+        limit = source.get("max_items")
+        if limit and len(normalized) > limit:
+            normalized = normalized[:limit]
+
         if not normalized:
             return source, [], "抓到了内容但没有可用条目"
         return source, normalized, None
