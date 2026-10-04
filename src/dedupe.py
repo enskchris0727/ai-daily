@@ -12,15 +12,36 @@ def _title_key(title):
     return _PUNCT.sub("", (title or "").lower())
 
 
-def _prefer(a, b):
-    """两条记录里挑保留价值更高的那条。
+def merge_duplicate(existing, fresh):
+    """同一条内容出现两次时的合并规则。
 
-    优先保留发布时间更早的（更接近真实发布时间，而不是抓取时间兜底），
-    其次保留标题更完整的。
+    背景：每次运行都会把上一版数据与本次抓取结果一起合并。
+    如果让旧记录胜出，解析规则的改进就永远不会体现在老条目上。
+
+    规则：
+      - 显示字段（标题、链接等）用本次抓取的新结果
+      - 发布时间保留更早的那个，优先保留真实时间而非抓取时间兜底值
     """
-    if a["published_at"] != b["published_at"]:
-        return a if a["published_at"] < b["published_at"] else b
-    return a if len(a["title"]) >= len(b["title"]) else b
+    merged = dict(fresh)
+    old_date = existing.get("published_at")
+    new_date = fresh.get("published_at")
+    old_real = existing.get("date_estimated") is False
+    new_real = fresh.get("date_estimated") is False
+
+    real_dates = []
+    if old_date and old_real:
+        real_dates.append(old_date)
+    if new_date and new_real:
+        real_dates.append(new_date)
+
+    if real_dates:
+        merged["published_at"] = min(real_dates)
+        merged["date_estimated"] = False
+    elif old_date and new_date:
+        merged["published_at"] = min(old_date, new_date)
+        merged["date_estimated"] = (existing.get("date_estimated", True)
+                                    and fresh.get("date_estimated", True))
+    return merged
 
 
 def dedupe(items):
@@ -28,13 +49,13 @@ def dedupe(items):
     by_id = {}
     for item in items:
         key = item["id"]
-        by_id[key] = item if key not in by_id else _prefer(by_id[key], item)
+        by_id[key] = item if key not in by_id else merge_duplicate(by_id[key], item)
 
     by_title = {}
     for item in by_id.values():
         key = _title_key(item["title"])
         if not key:
             key = item["id"]
-        by_title[key] = item if key not in by_title else _prefer(by_title[key], item)
+        by_title[key] = item if key not in by_title else merge_duplicate(by_title[key], item)
 
     return list(by_title.values())
