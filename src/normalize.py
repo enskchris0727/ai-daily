@@ -20,6 +20,10 @@ _TRAILING_DATE = re.compile(
     r"[\s\-|,]*20\d{2}\s*[-/.]\s*\d{1,2}\s*[-/.]\s*\d{1,2}\s*$"
 )
 
+_EMBEDDED_EN_DATE = re.compile(
+    r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2},\s*20\d{2}\b\s*[\u00b7\u2022|]?\s*"
+)
+
 _LEADING_DATE = re.compile(
     r"^[\s\-|,·]*(?:[A-Za-z]{3,9}\s+\d{1,2},\s*20\d{2}|20\d{2}\s*[-/.]\s*\d{1,2}\s*[-/.]\s*\d{1,2})\s*[-|,·]?\s*"
 )
@@ -33,6 +37,7 @@ def clean_title(value):
         previous = text
         text = _TRAILING_DATE.sub("", text)
         text = _LEADING_DATE.sub("", text)
+        text = _EMBEDDED_EN_DATE.sub("", text)
         text = text.strip(" -|,·")
     return text
 
