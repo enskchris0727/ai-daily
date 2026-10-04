@@ -33,6 +33,23 @@ MAX_TITLE = 300
 DATE_HINT = re.compile(r"(20\d{2})[-/年.](\d{1,2})[-/月.](\d{1,2})")
 
 
+def _anchor_title(anchor):
+    """尽量取卡片里的标题元素，避免把日期与摘要一起粘进标题。"""
+    for tag in ("h1", "h2", "h3", "h4"):
+        node = anchor.find(tag)
+        if node:
+            text = clean_text(node.get_text(" ", strip=True))
+            if text:
+                return text
+    for hint in ("title", "headline", "heading"):
+        node = anchor.find(class_=re.compile(hint, re.I))
+        if node:
+            text = clean_text(node.get_text(" ", strip=True))
+            if text:
+                return text
+    return clean_text(anchor.get_text(" ", strip=True))
+
+
 def _from_json_ld(soup, base_url):
     """尝试从 JSON-LD 里取文章列表。"""
     items = []
@@ -88,7 +105,7 @@ def _from_dom(soup, base_url):
         href = a["href"].strip()
         if not href or BAD_HREF.search(href):
             continue
-        title = clean_text(a.get_text(" ", strip=True))
+        title = _anchor_title(a)
         if not (MIN_TITLE <= len(title) <= MAX_TITLE):
             continue
         if title.strip().lower() in JUNK_TITLE:
