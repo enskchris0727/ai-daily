@@ -10,6 +10,14 @@ on:
   schedule:
     - cron: "0 0,5,12 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "web/**"
+      - "sources.yaml"
+      - "tools/**"
+      - ".github/workflows/update.yml"
 
 permissions:
   contents: read
